@@ -217,9 +217,6 @@ int main(int argc, const char *argv[])
             // store matches in current data frame
             (dataBuffer.end() - 1)->kptMatches = matches;
 
-            //cout << "#7 : MATCH KEYPOINT DESCRIPTORS done" << endl;
-
-            
             /* TRACK 3D OBJECT BOUNDING BOXES */
 
             //// STUDENT ASSIGNMENT
@@ -230,9 +227,6 @@ int main(int argc, const char *argv[])
 
             // store matches in current data frame
             (dataBuffer.end()-1)->bbMatches = bbBestMatches;
-
-            //cout << "#8 : TRACK 3D OBJECT BOUNDING BOXES done" << endl;
-
 
             /* COMPUTE TTC ON OBJECT IN FRONT */
 
@@ -264,7 +258,7 @@ int main(int argc, const char *argv[])
                     //// TASK FP.2 -> compute time-to-collision based on Lidar data (implement -> computeTTCLidar)
                     double ttcLidar; 
                     computeTTCLidar(prevBB->lidarPoints, currBB->lidarPoints, sensorFrameRate, ttcLidar);
-                    cout << "DEBUG: LIDAR TTC is " << ttcLidar << endl;
+                    cout << "LIDAR TTC: " << ttcLidar << endl;
                     //// EOF STUDENT ASSIGNMENT
 
                     //// STUDENT ASSIGNMENT
@@ -273,7 +267,7 @@ int main(int argc, const char *argv[])
                     double ttcCamera;
                     clusterKptMatchesWithROI(*currBB, (dataBuffer.end() - 2)->keypoints, (dataBuffer.end() - 1)->keypoints, (dataBuffer.end() - 1)->kptMatches);                    
                     computeTTCCamera((dataBuffer.end() - 2)->keypoints, (dataBuffer.end() - 1)->keypoints, currBB->kptMatches, sensorFrameRate, ttcCamera);
-                    cout << "DEBUG: CAMERA TTC is " << ttcCamera << endl;
+                    cout << "CAMERA TTC: " << ttcCamera << endl;
                     //// EOF STUDENT ASSIGNMENT
 
                     bVis = true;
@@ -290,10 +284,9 @@ int main(int argc, const char *argv[])
                         string windowName = "Final Results : TTC";
                         cv::namedWindow(windowName, 4);
                         cv::imshow(windowName, visImg);
-                        //cout << "Press key to continue to next frame" << endl;
                         cv::waitKey(1);
                         string saveName = "result_" + imgNumber.str() + imgFileType;
-                        cout << "Writing to: " << saveName << endl;
+                        cout << "Saving images to: " << saveName << endl;
                         cv::imwrite(saveName, visImg);
                     }
                     bVis = false;
