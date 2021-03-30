@@ -139,9 +139,6 @@ int main(int argc, const char *argv[])
         }
         bVis = false;
 
-        //cout << "#4 : CLUSTER LIDAR POINT CLOUD done" << endl;
-        
-        
         // TODO: REMOVE THIS LINE BEFORE PROCEEDING WITH THE FINAL PROJECT
         //continue; // skips directly to the next image without processing what comes beneath
 
@@ -185,9 +182,6 @@ int main(int argc, const char *argv[])
         // push keypoints and descriptor for current frame to end of data buffer
         (dataBuffer.end() - 1)->keypoints = keypoints;
 
-        //cout << "#5 : DETECT KEYPOINTS done" << endl;
-
-
         /* EXTRACT KEYPOINT DESCRIPTORS */
 
         cv::Mat descriptors;
@@ -196,9 +190,6 @@ int main(int argc, const char *argv[])
 
         // push descriptors for current frame to end of data buffer
         (dataBuffer.end() - 1)->descriptors = descriptors;
-
-        //cout << "#6 : EXTRACT DESCRIPTORS done" << endl;
-
 
         if (dataBuffer.size() > 1) // wait until at least two images have been processed
         {
