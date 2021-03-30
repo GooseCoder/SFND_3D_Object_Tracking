@@ -33,3 +33,33 @@ In this final project, you will implement the missing parts in the schematic. To
 2. Make a build directory in the top level project directory: `mkdir build && cd build`
 3. Compile: `cmake .. && make`
 4. Run it: `./3D_object_tracking`.
+
+## Project description and Write-Up
+![Sample](./images/results/result_0001.png)
+
+#### 1. 3D Objects Matching
+A matchBoundingBoxes method was implemented to process 3d objects matching.
+
+#### 2. Compute TTC Lidar-based 
+Collision time calculated in seconds was implemented based on the lidar points within the region of interest of each matched Bounding-Box.
+
+#### 3. Keypoint Correspondences and Bounding Boxes association
+Keypoints for previous and current frame are matched / checked if they are within the right ROI. Outliers are being removed with a comparison with the average eucliean mean distance.
+
+#### 4. Compute Camera-based TTC
+Time to collision is measured in seconds and is implemented using the relationship between previous and current frames keypoint correspondences.
+
+#### 5. Performance Evaluation 1
+One simple example to explain when a Lidar TTC estimate is inplausible is when the lidar sensor returns some points which are clearly not located on the vehicle, but much closer than that. It could be some dust particles in the air caused by weather events (snow, sandstorms) which could introduce noise data into the lidar scans. The result could be a very low TTC.
+To prevent this, we need more robust to the outliers by using an average distance instead of a closest point analysis.
+
+One other example of an inplausible Lidar TTC estimate, is where outliers are detected from other parts of the vehicle. For example, the lidar is measuring the mirrors, which are much further away than the actual back of the car. In the experiment, the TTC increased from 12 to 16 seconds even with the minimum distance  has been decreased from 7.78m to 7.69m. These points can be filtered out simply by increasing the shrink factor when clustering the lidar with ROI.
+
+#### 6. Performance Evaluation 2
+The combinations of detector/descriptors were tested. The result is that the best performing camera TTC calculations used the AKAZE detector and FREAK descriptor.
+
+One example of an inplausible Camera TTC for this case is if the process takes much more time than 10 seconds. This is could be caused by bad keypoint matching, or that the descriptor is not good enough to recognize keypoints which are clustered close to each other.
+
+| Camera TTC compared to Lidar TTC        | Top performers chart       |
+|-----------------------------------------|----------------------------|
+| ![Plot](./images/6-alt.png)             | ![Plot](./images/6.png)  |
