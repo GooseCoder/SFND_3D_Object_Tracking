@@ -186,7 +186,7 @@ void computeTTCCamera(std::vector<cv::KeyPoint> &kptsPrev, std::vector<cv::KeyPo
         cv::KeyPoint kpOuterCurr = kptsCurr.at(it1->trainIdx);
 
         for (auto it2 = kptMatches.begin() + 1; it2 != kptMatches.end(); ++it2)
-        
+        {
             double minDistance = 100.0;
 
             // get next keypoint and its matched partner in the prev. frame
