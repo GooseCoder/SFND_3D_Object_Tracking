@@ -66,7 +66,7 @@ void descKeypoints(vector<cv::KeyPoint> &keypoints, cv::Mat &img, cv::Mat &descr
         extractor = cv::xfeatures2d::FREAK::create();
     }
     else if (descriptorType.compare("SIFT") == 0) {
-        extractor = cv::SIFT::create();
+        extractor = cv::xfeatures2d::SIFT::create();
     }
     else if (descriptorType.compare("AKAZE") == 0) {
         extractor = cv::AKAZE::create();
@@ -185,7 +185,7 @@ void detKeypointsModern(std::vector<cv::KeyPoint> &keypoints, cv::Mat &img, std:
         cout << "AKAZE: n= " << keypoints.size() << " keypoints, time " << 1000 * time / 1.0 << " (ms)" << endl;
     }
     else if (detectorType.compare("SIFT") == 0) {
-        cv::Ptr<cv::FeatureDetector> detector = cv::SIFT::create();
+        cv::Ptr<cv::FeatureDetector> detector = cv::xfeatures2d::SIFT::create();
         double time = (double)cv::getTickCount();
         detector->detect(img, keypoints);
         time = ((double)cv::getTickCount() - time) / cv::getTickFrequency();
